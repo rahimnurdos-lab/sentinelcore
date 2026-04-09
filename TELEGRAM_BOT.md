@@ -76,3 +76,14 @@ TELEGRAM_MAX_RECENT_INCIDENTS=50
 - `DATABASE_URL` берілсе, бот инциденттерді Neon-ға жазады (`tg_incidents`).
 - `/stats` және `/recent` командалары алдымен Neon деректерін көрсетеді.
 - `DATABASE_URL` жоқ болса, бот local JSON fallback режимінде жұмыс істейді.
+
+## 9) Production Hardening
+
+- Anti-spam rate limit:
+  - `TELEGRAM_COMMAND_WINDOW_MS`
+  - `TELEGRAM_COMMAND_LIMIT`
+  - `TELEGRAM_MOD_WINDOW_MS`
+  - `TELEGRAM_MOD_LIMIT`
+- Message size guard: `TELEGRAM_MAX_ANALYSIS_CHARS`
+- Optional admin alert chat: `TELEGRAM_ADMIN_ALERT_CHAT_ID`
+- `.env` файлын ешқашан git-ке қоспаңыз, токенді периодтық rotate жасаңыз.

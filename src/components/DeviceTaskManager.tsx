@@ -11,7 +11,6 @@ export const DeviceTaskManager: React.FC = () => {
 
   useEffect(() => {
     if (access === 'granted') {
-      let timerId: number | undefined;
       let expected = performance.now() + 1000;
 
       const sampleLoad = () => {
@@ -29,8 +28,8 @@ export const DeviceTaskManager: React.FC = () => {
       };
 
       sampleLoad();
-      timerId = window.setInterval(sampleLoad, 1000);
-      return () => window.clearInterval(timerId);
+      const tickId = window.setInterval(sampleLoad, 1000);
+      return () => window.clearInterval(tickId);
     }
 
     setCpuLoad(0);

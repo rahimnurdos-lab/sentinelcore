@@ -9,8 +9,8 @@ export const ThreatRadar: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let w = (canvas.width = canvas.offsetWidth * 2); // Retinal scaling
-    let h = (canvas.height = canvas.offsetHeight * 2);
+    const w = (canvas.width = canvas.offsetWidth * 2); // Retinal scaling
+    const h = (canvas.height = canvas.offsetHeight * 2);
     ctx.scale(2, 2);
 
     let angle = 0;
@@ -88,7 +88,7 @@ export const ThreatRadar: React.FC = () => {
          let currentAngle = angle % (Math.PI * 2);
          if (currentAngle < 0) currentAngle += Math.PI * 2;
 
-         let diff = Math.abs(currentAngle - dotAngle);
+         const diff = Math.abs(currentAngle - dotAngle);
          
          // If radar just passed
          if (diff < 0.2 || (Math.PI*2 - diff) < 0.2) {

@@ -27,6 +27,12 @@ const DEFAULT_MODE = (process.env.TELEGRAM_DEFAULT_MODE || 'balanced').toLowerCa
 const DEFAULT_ACTION = (process.env.TELEGRAM_DEFAULT_ACTION || 'delete_explain').toLowerCase();
 const MUTE_MINUTES = Number(process.env.TELEGRAM_MUTE_MINUTES || 15);
 const MAX_RECENT_INCIDENTS = Number(process.env.TELEGRAM_MAX_RECENT_INCIDENTS || 50);
+const MAX_ANALYSIS_CHARS = Number(process.env.TELEGRAM_MAX_ANALYSIS_CHARS || 4000);
+const COMMAND_WINDOW_MS = Number(process.env.TELEGRAM_COMMAND_WINDOW_MS || 10000);
+const COMMAND_LIMIT = Number(process.env.TELEGRAM_COMMAND_LIMIT || 8);
+const MODERATION_WINDOW_MS = Number(process.env.TELEGRAM_MOD_WINDOW_MS || 15000);
+const MODERATION_LIMIT = Number(process.env.TELEGRAM_MOD_LIMIT || 6);
+const ADMIN_ALERT_CHAT_ID = process.env.TELEGRAM_ADMIN_ALERT_CHAT_ID || '';
 const allowedChatIds = (process.env.TELEGRAM_ALLOWED_CHAT_IDS || '')
   .split(',')
   .map((id) => id.trim())
@@ -60,6 +66,9 @@ const DEFAULT_CONFIG = Object.freeze({
 const state = loadState();
 const pendingAppeals = new Map();
 const lastNoticeAtByChat = new Map();
+const commandRate = new Map();
+const moderationRate = new Map();
+const lastErrorNoticeAt = new Map();
 const NEON_ENABLED = isNeonEnabled();
 
 const tips = [
@@ -125,7 +134,10 @@ function loadState() {
 }
 
 function saveState() {
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2), 'utf8');
+  const tmp = `${STATE_PATH}.tmp`;
+  fs.writeFileSync(tmp, JSON.stringify(state, null, 2), 'utf8');
+  fs.copyFileSync(tmp, STATE_PATH);
+  fs.unlinkSync(tmp);
 }
 
 function getChatState(chatId) {
@@ -155,6 +167,33 @@ function isGroup(chat) {
 
 function nowIso() {
   return new Date().toISOString().replace('T', ' ').slice(0, 19);
+}
+
+function normalizeText(input) {
+  if (!input) return '';
+  return String(input).slice(0, Math.max(256, MAX_ANALYSIS_CHARS));
+}
+
+function checkRateLimit(bucket, key, limit, windowMs) {
+  const now = Date.now();
+  const history = bucket.get(key) || [];
+  const filtered = history.filter((x) => now - x < windowMs);
+  filtered.push(now);
+  bucket.set(key, filtered);
+  return filtered.length <= limit;
+}
+
+async function notifyAdminError(kind, message) {
+  if (!ADMIN_ALERT_CHAT_ID) return;
+  const now = Date.now();
+  const prev = lastErrorNoticeAt.get(kind) || 0;
+  if (now - prev < 60_000) return;
+  lastErrorNoticeAt.set(kind, now);
+  try {
+    await sendMessage(ADMIN_ALERT_CHAT_ID, `ALERT [${kind}] ${message}`);
+  } catch {
+    // no-op
+  }
 }
 
 async function api(method, payload = {}) {
@@ -394,15 +433,24 @@ function parseUserIdFromMessage(message, args) {
 
 async function handleCommand(message) {
   const chatId = message.chat.id;
-  const text = (message.text || '').trim();
+  const text = normalizeText(message.text || '').trim();
   const cmd = commandName(text);
   const args = parseArgs(text);
   const chatState = getChatState(chatId);
   const now = nowIso();
+  const fromId = String(message.from?.id || '');
 
   if (!isAllowedChat(chatId)) {
     await sendMessage(chatId, 'Бұл ботқа қолжетімділік шектелген.');
     return;
+  }
+
+  if (fromId) {
+    const allowed = checkRateLimit(commandRate, `${chatId}:${fromId}`, COMMAND_LIMIT, COMMAND_WINDOW_MS);
+    if (!allowed) {
+      if (shouldNotice(chatId)) await sendMessage(chatId, 'Өте жиі команда жіберілді. Бірнеше секунд күтіңіз.');
+      return;
+    }
   }
 
   if (cmd === '/start') {
@@ -678,7 +726,7 @@ function extractMessageText(message) {
   if (message.caption) parts.push(message.caption);
   if (message.document?.file_name) parts.push(message.document.file_name);
   if (message.video?.file_name) parts.push(message.video.file_name);
-  return parts.join('\n').trim();
+  return normalizeText(parts.join('\n').trim());
 }
 
 async function applyGuardAction(message, analysis, chatState) {
@@ -805,6 +853,15 @@ async function moderateMessage(message) {
   const chatState = getChatState(message.chat.id);
   if (!chatState.config.moderation) return;
   if (chatState.allowUsers.includes(String(message.from?.id || ''))) return;
+  if (message.from?.id) {
+    const allowed = checkRateLimit(
+      moderationRate,
+      `${message.chat.id}:${message.from.id}`,
+      MODERATION_LIMIT,
+      MODERATION_WINDOW_MS
+    );
+    if (!allowed) return;
+  }
 
   const text = extractMessageText(message);
   if (!text) return;
@@ -843,6 +900,7 @@ async function poll() {
       }
     } catch (error) {
       console.error('[telegram-bot] polling error:', error.message);
+      await notifyAdminError('poll', error.message);
       await new Promise((resolve) => setTimeout(resolve, 2000));
     }
   }
@@ -866,6 +924,7 @@ if (NEON_ENABLED) {
     console.log('Neon storage: connected');
   } catch (error) {
     console.error('[neon] init failed:', error.message);
+    await notifyAdminError('neon_init', error.message);
   }
 }
 console.log(`${BOT_TITLE} іске қосылды (@${botUsername}). Polling басталды...`);

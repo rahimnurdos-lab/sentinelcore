@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Header from '../components/Header';
 import type { NavVariant } from '../components/BottomNav';
 import { useSentinel } from '../context/SentinelContext';
@@ -16,6 +16,7 @@ interface Message {
 }
 
 export const CyberAdvisorScreen: React.FC<CyberAdvisorScreenProps> = (props) => {
+  const { onNavigate, onOpenMenu } = props;
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -33,6 +34,7 @@ export const CyberAdvisorScreen: React.FC<CyberAdvisorScreenProps> = (props) => 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const workerRef = useRef<Worker | null>(null);
   const recognitionRef = useRef<any>(null);
+  const handleSendVoiceRef = useRef<(textOverride?: string) => void>(() => {});
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -54,7 +56,7 @@ export const CyberAdvisorScreen: React.FC<CyberAdvisorScreenProps> = (props) => 
       recognitionRef.current.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
         setInput(transcript);
-        handleSendVoice(transcript);
+        handleSendVoiceRef.current(transcript);
       };
       
       recognitionRef.current.onend = () => {
@@ -115,7 +117,7 @@ export const CyberAdvisorScreen: React.FC<CyberAdvisorScreenProps> = (props) => 
 
   const { addThreatLog } = useSentinel();
 
-  const getSmartFallback = (input: string) => {
+  const getSmartFallback = useCallback((input: string) => {
      if (input.includes('вирус') || input.includes('malware') || input.includes('троян')) return "Вирустар – бұл компьютерге зақым келтіретін немесе деректерді ұрлайтын зиянды бағдарламалар (Malware). Олардан қорғану үшін әрқашан антивирусты жаңартып, бейтаныс файлдарды немесе сілтемелерді ашпаңыз.";
      if (input.includes('фишинг') || input.includes('phishing')) return "Фишинг – бұл алаяқтардың ресми ұйым кейпіне еніп, сіздің логин, құпиясөзіңізді немесе банк картаңызды ұрлау тәсілі. Біздің платформадағы Симулятор арқылы фишингтен қорғануды үйрене аласыз.";
      if (input.includes('пароль') || input.includes('құпиясөз') || input.includes('сырсөз')) return "Мықты пароль жасау үшін: кемінде 12 символ, бас әріптер, сандар және арнайы таңбаларды қолданыңыз. Барлық сайттарда бірдей пароль қолданбау өте маңызды!";
@@ -124,9 +126,9 @@ export const CyberAdvisorScreen: React.FC<CyberAdvisorScreenProps> = (props) => 
      if (input.includes('сәлем') || input.includes('ассалаумағалейкум') || input.includes('привет')) return "Сәлеметсіз бе! Мен киберқауіпсіздік жөніндегі көмекшімін. Маған файлды тексеруді, киберқауіптер жайлы мәлімет беруді немесе оқу курстарын ашуды бұйыра аласыз.";
      
      return "Local AI моделі (Нейрожелі) алғаш рет браузерге жүктелгенше (кең жолақты интернет болмаса біраз күттіруі мүмкін) сіздің бұл күрделі сұрағыңызға жүйе автоматты жауап бере алмайды. Дегенмен, қазіргі уақытта вирустар, фишинг, VPN, парольдер туралы сұрай аласыз немесе модульдерді ауыстыруды бұйыра аласыз.";
-  };
+  }, []);
 
-  const handleSendVoice = (textOverride?: string) => {
+  const handleSendVoice = useCallback((textOverride?: string) => {
     const textToSend = textOverride || input;
     if (!textToSend.trim()) return;
 
@@ -147,19 +149,19 @@ export const CyberAdvisorScreen: React.FC<CyberAdvisorScreenProps> = (props) => 
     let willNavigate = false;
 
     if (lowerInput.includes('сканер') || lowerInput.includes('url') || lowerInput.includes('тексер')) {
-       action = () => setTimeout(() => props.onNavigate('analyzer'), 1800);
+       action = () => setTimeout(() => onNavigate('analyzer'), 1800);
        willNavigate = true;
     } else if (lowerInput.includes('хат') || lowerInput.includes('email') || lowerInput.includes('пошта')) {
-       action = () => setTimeout(() => props.onNavigate('analyzer-email'), 1800);
+       action = () => setTimeout(() => onNavigate('analyzer-email'), 1800);
        willNavigate = true;
     } else if (lowerInput.includes('үйрен') || lowerInput.includes('курс') || lowerInput.includes('оқу')) {
-       action = () => setTimeout(() => props.onNavigate('training'), 1800);
+       action = () => setTimeout(() => onNavigate('training'), 1800);
        willNavigate = true;
     } else if (lowerInput.includes('фишинг') || lowerInput.includes('практика') || lowerInput.includes('жарыс')) {
-       action = () => setTimeout(() => props.onNavigate('simulator'), 1800);
+       action = () => setTimeout(() => onNavigate('simulator'), 1800);
        willNavigate = true;
     } else if (lowerInput.includes('лог') || lowerInput.includes('статистика')) {
-       action = () => setTimeout(() => props.onNavigate('home'), 1800);
+       action = () => setTimeout(() => onNavigate('home'), 1800);
        willNavigate = true;
     }
 
@@ -200,7 +202,11 @@ export const CyberAdvisorScreen: React.FC<CyberAdvisorScreenProps> = (props) => 
           }, 600);
        }
     }
-  };
+   }, [addThreatLog, getSmartFallback, input, modelReady, onNavigate]);
+
+  useEffect(() => {
+    handleSendVoiceRef.current = handleSendVoice;
+  }, [handleSendVoice]);
 
   const handleSend = () => {
     handleSendVoice();
@@ -216,7 +222,7 @@ export const CyberAdvisorScreen: React.FC<CyberAdvisorScreenProps> = (props) => 
   return (
     <div className="min-h-screen bg-transparent text-[#e2e2e5] font-['Manrope'] pb-6">
       <div className="md:hidden">
-        <Header onOpenMenu={props.onOpenMenu} />
+        <Header onOpenMenu={onOpenMenu} />
       </div>
 
       <main className="pt-24 md:pt-10 px-6 flex justify-center w-full h-[calc(100vh-30px)] md:h-screen">
@@ -248,7 +254,7 @@ export const CyberAdvisorScreen: React.FC<CyberAdvisorScreenProps> = (props) => 
               </div>
             </div>
             <button onClick={() => {
-                props.onNavigate('home');
+                  onNavigate('home');
               }} 
               className="w-10 h-10 rounded-full hover:bg-white/5 flex items-center justify-center transition-colors text-[#8d909d]">
               <span className="material-symbols-outlined">close</span>

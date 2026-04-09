@@ -45,7 +45,7 @@ self.addEventListener('message', async (event) => {
                 do_sample: true,
             });
 
-            let generatedText = output[0]?.generated_text || '';
+            const generatedText = output[0]?.generated_text || '';
             const parts = generatedText.split('<|im_start|>assistant\n');
             let assistantReply = parts.length > 1 ? parts[1] : generatedText;
             assistantReply = assistantReply.replace('<|im_end|>', '').trim();
