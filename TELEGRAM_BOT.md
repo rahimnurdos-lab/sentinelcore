@@ -12,7 +12,7 @@
 npm run bot:db:init
 npm run bot:preflight
 npm run bot:setup
-npm run bot:start
+npm run bot:webhook:set
 ```
 
 ## 3) User Commands
@@ -48,6 +48,13 @@ npm run bot:start
 
 - Delete messages
 - Restrict members (mute режимі үшін)
+
+## 5.1) Vercel Webhook
+
+- Vercel deploy кейін `VERCEL_PUBLIC_URL` env қойыңыз
+- `TELEGRAM_WEBHOOK_SECRET` беріңіз
+- `npm run bot:webhook:set` іске қосыңыз
+- Telegram update-тер `/api/telegram-webhook` endpoint-іне түседі
 
 ## 6) Moderation Logic
 

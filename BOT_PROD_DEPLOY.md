@@ -1,4 +1,4 @@
-# Telegram Bot Production Deploy
+# Telegram Bot Production Deploy (Vercel Only)
 
 ## 1) Token қауіпсіздігі (міндетті)
 
@@ -6,13 +6,15 @@
 2. Жаңа token алыңыз.
 3. Ескі token-ді толық тоқтатыңыз.
 
-## 2) Environment Variables
+## 2) Environment Variables (Vercel Project)
 
 Worker platform-ға мына env-терді қойыңыз:
 
 - `TELEGRAM_BOT_TOKEN`
 - `DATABASE_URL`
 - `SENTINEL_APP_URL`
+- `VERCEL_PUBLIC_URL`
+- `TELEGRAM_WEBHOOK_SECRET`
 - `BOT_TITLE`
 - `TELEGRAM_GROUP_MODERATION_DEFAULT=true`
 - `TELEGRAM_DEFAULT_MODE=strict`
@@ -32,7 +34,7 @@ Worker platform-ға мына env-терді қойыңыз:
 npm run bot:db:init
 ```
 
-## 4) Preflight check
+## 4) Preflight check (local)
 
 ```bash
 npm run bot:preflight
@@ -40,9 +42,13 @@ npm run bot:preflight
 
 ## 5) Deploy options
 
-- Railway: `railway.json` дайын
-- Render: `render.yaml` дайын
-- VPS/PM2: `ecosystem.config.cjs` дайын
+- Vercel Serverless Webhook: `/api/telegram-webhook`
+
+Webhook орнату:
+
+```bash
+npm run bot:webhook:set
+```
 
 ## 6) Post-deploy smoke test
 

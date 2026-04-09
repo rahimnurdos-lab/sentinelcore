@@ -25,6 +25,7 @@ const required = [
   'DATABASE_URL',
   'SENTINEL_APP_URL',
   'VITE_TELEGRAM_BOT_URL',
+  'TELEGRAM_WEBHOOK_SECRET',
 ];
 
 const missing = required.filter((key) => !map[key]);

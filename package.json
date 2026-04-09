@@ -12,6 +12,7 @@
     "bot:setup": "node scripts/telegram-setup.js",
     "bot:db:init": "node scripts/telegram-db-init.js",
     "bot:preflight": "node scripts/preflight-secrets.js",
+    "bot:webhook:set": "node scripts/set-telegram-webhook.js",
     "bot:start": "node scripts/telegram-bot.js"
   },
   "dependencies": {

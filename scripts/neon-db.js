@@ -48,6 +48,27 @@ export async function initNeonSchema() {
   `;
   await sql`CREATE INDEX IF NOT EXISTS idx_tg_incidents_chat_created ON tg_incidents (chat_id, created_at DESC)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_tg_incidents_status ON tg_incidents (status)`;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS tg_chat_config (
+      chat_id TEXT PRIMARY KEY,
+      moderation BOOLEAN NOT NULL DEFAULT true,
+      mode TEXT NOT NULL DEFAULT 'strict',
+      action TEXT NOT NULL DEFAULT 'delete_explain',
+      mute_minutes INT NOT NULL DEFAULT 30,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS tg_user_strikes (
+      chat_id TEXT NOT NULL,
+      user_id TEXT NOT NULL,
+      strikes INT NOT NULL DEFAULT 0,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      PRIMARY KEY (chat_id, user_id)
+    )
+  `;
 }
 
 export async function insertIncident({
@@ -93,4 +114,57 @@ export async function getChatStats(chatId) {
     WHERE chat_id = ${String(chatId)}
   `;
   return rows[0] || { moderated: 0, blocked: 0, suspicious: 0, deleted: 0, muted: 0 };
+}
+
+export async function getChatConfig(chatId) {
+  if (!sql) return null;
+  const rows = await sql`
+    SELECT chat_id, moderation, mode, action, mute_minutes
+    FROM tg_chat_config
+    WHERE chat_id = ${String(chatId)}
+    LIMIT 1
+  `;
+  return rows[0] || null;
+}
+
+export async function upsertChatConfig(chatId, patch) {
+  if (!sql) return null;
+  const curr = (await getChatConfig(chatId)) || {
+    moderation: true,
+    mode: 'strict',
+    action: 'delete_explain',
+    mute_minutes: 30,
+  };
+  const next = {
+    moderation: typeof patch.moderation === 'boolean' ? patch.moderation : curr.moderation,
+    mode: patch.mode || curr.mode,
+    action: patch.action || curr.action,
+    mute_minutes: Number.isFinite(patch.mute_minutes) ? patch.mute_minutes : curr.mute_minutes,
+  };
+
+  const rows = await sql`
+    INSERT INTO tg_chat_config (chat_id, moderation, mode, action, mute_minutes, updated_at)
+    VALUES (${String(chatId)}, ${next.moderation}, ${next.mode}, ${next.action}, ${next.mute_minutes}, NOW())
+    ON CONFLICT (chat_id) DO UPDATE SET
+      moderation = EXCLUDED.moderation,
+      mode = EXCLUDED.mode,
+      action = EXCLUDED.action,
+      mute_minutes = EXCLUDED.mute_minutes,
+      updated_at = NOW()
+    RETURNING chat_id, moderation, mode, action, mute_minutes
+  `;
+  return rows[0] || null;
+}
+
+export async function incrementStrike(chatId, userId) {
+  if (!sql) return 0;
+  const rows = await sql`
+    INSERT INTO tg_user_strikes (chat_id, user_id, strikes, updated_at)
+    VALUES (${String(chatId)}, ${String(userId)}, 1, NOW())
+    ON CONFLICT (chat_id, user_id) DO UPDATE SET
+      strikes = tg_user_strikes.strikes + 1,
+      updated_at = NOW()
+    RETURNING strikes
+  `;
+  return rows[0]?.strikes || 0;
 }
