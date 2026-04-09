@@ -10,6 +10,7 @@
 
 ```bash
 npm run bot:db:init
+npm run bot:preflight
 npm run bot:setup
 npm run bot:start
 ```

@@ -1,0 +1,8 @@
+services:
+  - type: worker
+    name: sentinel-telegram-bot
+    runtime: node
+    plan: starter
+    buildCommand: npm ci
+    startCommand: npm run bot:start
+    autoDeploy: true
