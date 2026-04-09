@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="kk"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#a5c8ff",
+              "inverse-on-surface": "#2f3133",
+              "outline": "#8d909d",
+              "on-tertiary-fixed-variant": "#7a3000",
+              "secondary": "#40e56c",
+              "background": "#121416",
+              "on-background": "#e2e2e5",
+              "surface-container": "#1e2022",
+              "on-primary-fixed": "#001c3a",
+              "surface-container-high": "#282a2c",
+              "on-surface-variant": "#c3c6d4",
+              "on-primary-fixed-variant": "#004786",
+              "surface": "#121416",
+              "surface-dim": "#121416",
+              "primary-fixed-dim": "#a5c8ff",
+              "secondary-container": "#02c953",
+              "on-secondary-fixed-variant": "#00531e",
+              "on-tertiary-container": "#ffa87c",
+              "surface-container-lowest": "#0c0e10",
+              "inverse-surface": "#e2e2e5",
+              "on-tertiary": "#562000",
+              "tertiary-container": "#823400",
+              "on-surface": "#e2e2e5",
+              "on-secondary-container": "#004d1b",
+              "surface-container-low": "#1a1c1e",
+              "on-primary-container": "#93beff",
+              "surface-bright": "#37393b",
+              "primary-container": "#004c8f",
+              "on-secondary-fixed": "#002108",
+              "tertiary-fixed": "#ffdbcb",
+              "tertiary": "#ffb692",
+              "surface-variant": "#333537",
+              "on-tertiary-fixed": "#341100",
+              "on-secondary": "#003912",
+              "error-container": "#93000a",
+              "surface-tint": "#a5c8ff",
+              "on-error": "#690005",
+              "primary-fixed": "#d4e3ff",
+              "tertiary-fixed-dim": "#ffb692",
+              "secondary-fixed-dim": "#3ce36a",
+              "surface-container-highest": "#333537",
+              "on-error-container": "#ffdad6",
+              "outline-variant": "#434652",
+              "inverse-primary": "#005faf",
+              "error": "#ffb4ab",
+              "secondary-fixed": "#69ff87",
+              "on-primary": "#00315f"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scanner-ring {
+            border: 2px solid transparent;
+            border-top-color: #a5c8ff;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .pulse-core {
+            box-shadow: 0 0 40px rgba(165, 200, 255, 0.2);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body selection:bg-primary/30 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-[#121416]">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#a5c8ff]" data-icon="shield_with_heart">shield_with_heart</span>
+<h1 class="font-headline font-bold text-xl tracking-tight text-[#a5c8ff]">Қауіпсіздік</h1>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-highest border border-outline-variant/30">
+<img alt="пайдаланушы профилі" class="w-full h-full object-cover" data-alt="User profile avatar of a professional in dark mode aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFyzOR_-UKSFoBrMl7_gcaVkptEnFOu2-GRTv4SVneXYPJ2zXpBz-dmIrcr1AyrZkA5T_G_qnDBmsMCHxaH_pTIAOl6h6d5hM9l4-jRLBsgmQyGxajEflwvIKlqLpkuo2TCYvqN8mIK4e_0VLMGjxe6r2DbXhTxv4-vt8NJt1j2BrmdmP74Fro0hi9wWZZVe1afVjLjcz22FE7sKYtv3yPE1_7FX0w_ypgG3uTvUjBFn2uNRKzlhZZrzOPc6smNOqMUYGk2LGH5fQ"/>
+</div>
+</header>
+<main class="flex-grow pt-24 pb-32 px-6 flex flex-col items-center max-w-md mx-auto w-full">
+<!-- Scan Animation Section -->
+<div class="relative w-72 h-72 flex items-center justify-center mb-12">
+<!-- Background Layering -->
+<div class="absolute inset-0 rounded-full bg-surface-container-low opacity-50"></div>
+<!-- Rotating Rings -->
+<div class="absolute inset-4 scanner-ring opacity-40"></div>
+<div class="absolute inset-8 scanner-ring opacity-20" style="animation-direction: reverse; animation-duration: 3s;"></div>
+<!-- Central Indicator -->
+<div class="relative z-10 w-48 h-48 rounded-full bg-surface-container-high pulse-core flex flex-col items-center justify-center border border-primary/10">
+<span class="material-symbols-outlined text-primary text-5xl mb-2" data-icon="security_update_good">security_update_good</span>
+<div class="font-headline font-bold text-3xl text-primary">84%</div>
+<div class="text-[10px] uppercase tracking-[0.2em] text-on-surface-variant font-medium">Белсенді</div>
+</div>
+<!-- Scanning Particle/Orbs Decorative -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-secondary shadow-[0_0_10px_#40e56c]"></div>
+</div>
+<!-- Status Message -->
+<div class="text-center mb-10 w-full">
+<h2 class="font-headline text-lg font-semibold text-on-surface mb-2">Терең эвристикалық талдау жүріп жатыр...</h2>
+<p class="text-on-surface-variant text-sm font-light">Жүйелік файлдар мен желілік белсенділік тексерілуде</p>
+</div>
+<!-- Threats/Status List (Bento-lite style) -->
+<div class="grid grid-cols-1 gap-3 w-full">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl border border-outline-variant/5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="verified_user">verified_user</span>
+</div>
+<div>
+<div class="text-sm font-bold text-on-surface">0 қауіп табылды</div>
+<div class="text-xs text-on-surface-variant">Барлық файлдар таза</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle">check_circle</span>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl border border-outline-variant/5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="browser_updated">browser_updated</span>
+</div>
+<div>
+<div class="text-sm font-bold text-on-surface">Браузер қауіпсіз</div>
+<div class="text-xs text-on-surface-variant">Шифрлау белсенді</div>
+</div>
+</div>
+<div class="flex gap-1">
+<div class="w-1 h-1 rounded-full bg-secondary animate-pulse"></div>
+<div class="w-1 h-1 rounded-full bg-secondary/40"></div>
+<div class="w-1 h-1 rounded-full bg-secondary/20"></div>
+</div>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-xl border border-outline-variant/5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="apps">apps</span>
+</div>
+<div>
+<div class="text-sm font-bold text-on-surface">Қолданбалар тексерілді</div>
+<div class="text-xs text-on-surface-variant">124/156 аяқталды</div>
+</div>
+</div>
+<div class="text-[10px] font-mono text-primary bg-primary-container/20 px-2 py-1 rounded">SCANNING</div>
+</div>
+</div>
+<!-- Action Area -->
+<div class="mt-12 w-full">
+<button class="w-full py-4 rounded-full bg-surface-container-highest text-on-surface font-headline font-bold tracking-wide active:scale-95 transition-all duration-200 border border-outline-variant/20 hover:bg-surface-bright">
+                Сканерлеуді тоқтату
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#121416]/80 backdrop-blur-xl border-t border-white/10 rounded-t-[0.75rem] shadow-[0_-4px_24px_rgba(0,0,0,0.4)]">
+<div class="flex flex-col items-center justify-center text-white/50 px-5 py-2 hover:text-white transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-body text-[10px] font-medium uppercase tracking-widest">Басты бет</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-[#004c8f] text-[#a5c8ff] rounded-[0.75rem] px-5 py-2 active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="Timeline">timeline</span>
+<span class="font-body text-[10px] font-medium uppercase tracking-widest">Талдау</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/50 px-5 py-2 hover:text-white transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="psychology">psychology</span>
+<span class="font-body text-[10px] font-medium uppercase tracking-widest">Диагностика</span>
+</div>
+<div class="flex flex-col items-center justify-center text-white/50 px-5 py-2 hover:text-white transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined mb-1" data-icon="settings">settings</span>
+<span class="font-body text-[10px] font-medium uppercase tracking-widest">Баптаулар</span>
+</div>
+</nav>
+</body></html>

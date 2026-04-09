@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="kk"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface-variant": "#c3c6d4",
+              "surface-tint": "#a5c8ff",
+              "tertiary": "#ffb692",
+              "tertiary-container": "#823400",
+              "surface-dim": "#121416",
+              "on-tertiary-fixed": "#341100",
+              "error": "#ffb4ab",
+              "surface-container": "#1e2022",
+              "primary-fixed-dim": "#a5c8ff",
+              "secondary-fixed": "#69ff87",
+              "secondary-container": "#02c953",
+              "on-primary-fixed": "#001c3a",
+              "primary-fixed": "#d4e3ff",
+              "on-primary": "#00315f",
+              "on-secondary-container": "#004d1b",
+              "on-error": "#690005",
+              "surface": "#121416",
+              "tertiary-fixed-dim": "#ffb692",
+              "on-secondary-fixed-variant": "#00531e",
+              "inverse-on-surface": "#2f3133",
+              "secondary": "#40e56c",
+              "secondary-fixed-dim": "#3ce36a",
+              "on-tertiary-fixed-variant": "#7a3000",
+              "inverse-primary": "#005faf",
+              "outline": "#8d909d",
+              "on-error-container": "#ffdad6",
+              "on-tertiary": "#562000",
+              "on-surface": "#e2e2e5",
+              "tertiary-fixed": "#ffdbcb",
+              "background": "#121416",
+              "surface-container-lowest": "#0c0e10",
+              "surface-container-low": "#1a1c1e",
+              "primary": "#a5c8ff",
+              "on-background": "#e2e2e5",
+              "surface-variant": "#333537",
+              "surface-bright": "#37393b",
+              "on-secondary": "#003912",
+              "outline-variant": "#434652",
+              "on-primary-fixed-variant": "#004786",
+              "primary-container": "#004c8f",
+              "on-primary-container": "#93beff",
+              "on-secondary-fixed": "#002108",
+              "surface-container-high": "#282a2c",
+              "surface-container-highest": "#333537",
+              "inverse-surface": "#e2e2e5",
+              "error-container": "#93000a",
+              "on-tertiary-container": "#ffa87c"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Manrope"],
+              "label": ["Manrope"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .security-pulse {
+            animation: pulse-ring 3s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+            100% { transform: scale(0.9); opacity: 0.8; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary/30 min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-[#121416] transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#a5c8ff]" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+<h1 class="font-['Space_Grotesk'] font-black tracking-[0.2em] text-[#a5c8ff] text-xl">SENTINEL</h1>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-primary/20">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a young professional man with a confident expression in a tech environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiJ4CY2rs9rAqo1DCkVfFV1xD1efRhfLOHaWFHbRgoo5ZkPqkPVAYcewFDZbNHZqMbh3veVsFs75r5zh7TcM69hCygXTKLSfXj5pu1NfYgOg3wSXPl94HaD-X2Aus_S5-dYjeFguNXA-sCUx1Ir8I11O7AmSM7GT6cqMppOCu_3_2EsbatIeJNSXgc-dpM5sEuj-zgwtVNvU2yMtFF1uM8CZ2VCDVvRuS6PbeeqpV9T5d9Yh6CgSzxyX3agi2pmhJ3hXpQPJYEW3I"/>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow pt-24 pb-32 px-6 max-w-lg mx-auto w-full">
+<!-- Hero Section: Dynamic Status -->
+<section class="flex flex-col items-center mb-16 relative">
+<div class="relative w-72 h-72 flex items-center justify-center">
+<!-- Concentric Pulse Rings -->
+<div class="absolute inset-0 rounded-full bg-secondary/10 security-pulse scale-125"></div>
+<div class="absolute inset-0 rounded-full bg-secondary/5 security-pulse scale-150" style="animation-delay: 1s;"></div>
+<!-- Main Status Button -->
+<button class="relative z-10 w-64 h-64 rounded-full bg-surface-container-highest shadow-[0_0_80px_rgba(64,229,108,0.15)] flex flex-col items-center justify-center border border-secondary/20 active:scale-95 transition-all duration-300">
+<div class="absolute inset-0 rounded-full bg-gradient-to-tr from-secondary/10 to-transparent"></div>
+<span class="material-symbols-outlined text-secondary text-7xl mb-2" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-headline font-bold text-3xl tracking-tight text-on-surface">Қорғалған</span>
+<span class="font-label text-xs uppercase tracking-[0.2em] text-secondary mt-2">ЖИ ТҮЙІНІ БЕЛСЕНДІ</span>
+</button>
+</div>
+</section>
+<!-- Stats Bento Grid -->
+<section class="grid grid-cols-2 gap-4 mb-12">
+<div class="bg-surface-container-low p-5 rounded-full-lg flex flex-col justify-between aspect-square">
+<span class="material-symbols-outlined text-primary mb-4">memory</span>
+<div>
+<div class="text-3xl font-headline font-bold text-on-surface">98.2<span class="text-primary text-sm ml-1">%</span></div>
+<div class="text-on-surface-variant text-xs font-medium uppercase tracking-wider">Нейрондық тұтастық</div>
+</div>
+</div>
+<div class="bg-surface-container-high p-5 rounded-full-lg flex flex-col justify-between aspect-square">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-secondary">wifi_tethering</span>
+<span class="bg-secondary/20 text-secondary text-[10px] px-2 py-0.5 rounded-full font-bold">LIVE</span>
+</div>
+<div>
+<div class="text-3xl font-headline font-bold text-on-surface">Қауіпсіз</div>
+<div class="text-on-surface-variant text-xs font-medium uppercase tracking-wider">ҚОСЫЛЫМ ЖОЛЫ</div>
+</div>
+</div>
+</section>
+<!-- Recent Security Events -->
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-headline font-bold text-xl tracking-tight ml-2">Sentinel-дің соңғы әрекеттері</h2>
+<span class="text-primary text-xs font-bold uppercase tracking-widest cursor-pointer hover:underline">ЖУРНАЛДЫ КӨРУ</span>
+</div>
+<div class="space-y-3">
+<!-- Event 1 -->
+<div class="group bg-surface-container-low hover:bg-surface-container-high transition-all duration-300 p-4 rounded-full flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-xl">encrypted</span>
+</div>
+<div class="flex-grow">
+<h4 class="text-on-surface font-semibold text-sm">VPN протоколын автоматты ауыстыру</h4>
+<p class="text-on-surface-variant text-xs">WireGuard түйініне кедергісіз ауысу</p>
+</div>
+<span class="text-on-surface-variant text-[10px] font-mono mr-2">2M AGO</span>
+</div>
+<!-- Event 2 -->
+<div class="group bg-surface-container-low hover:bg-surface-container-high transition-all duration-300 p-4 rounded-full flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl">database</span>
+</div>
+<div class="flex-grow">
+<h4 class="text-on-surface font-semibold text-sm">Қойманы синхрондау аяқталды</h4>
+<p class="text-on-surface-variant text-xs">14 маңызды кілт қауіпсіз жаңартылды</p>
+</div>
+<span class="text-on-surface-variant text-[10px] font-mono mr-2">1H AGO</span>
+</div>
+<!-- Event 3 -->
+<div class="group bg-surface-container-low hover:bg-surface-container-high transition-all duration-300 p-4 rounded-full flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-xl">block</span>
+</div>
+<div class="flex-grow">
+<h4 class="text-on-surface font-semibold text-sm">Жарнамалық трекер блокталды</h4>
+<p class="text-on-surface-variant text-xs">Браузерден деректердің жылыстауына жол берілмеді</p>
+</div>
+<span class="text-on-surface-variant text-[10px] font-mono mr-2">3H AGO</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#121416]/80 backdrop-blur-xl border-t border-[#a5c8ff]/15 shadow-[0_-4px_24px_rgba(0,0,0,0.4)] rounded-t-[0.75rem]">
+<!-- Active Nav: Shield (Home) -->
+<a class="flex flex-col items-center justify-center bg-[#004c8f] text-[#a5c8ff] rounded-[0.75rem] px-5 py-2 active:scale-90 duration-300 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-['Manrope'] text-[10px] font-medium tracking-wide mt-1">Қалқан</span>
+</a>
+<!-- Inactive Nav: Analysis (Logs) -->
+<a class="flex flex-col items-center justify-center text-gray-500 px-5 py-2 hover:text-[#a5c8ff] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-['Manrope'] text-[10px] font-medium tracking-wide mt-1">Талдау</span>
+</a>
+<!-- Inactive Nav: Vault (Profile Proxy) -->
+<a class="flex flex-col items-center justify-center text-gray-500 px-5 py-2 hover:text-[#a5c8ff] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined">fingerprint</span>
+<span class="font-['Manrope'] text-[10px] font-medium tracking-wide mt-1">Қойма</span>
+</a>
+<!-- Inactive Nav: Settings -->
+<a class="flex flex-col items-center justify-center text-gray-500 px-5 py-2 hover:text-[#a5c8ff] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Manrope'] text-[10px] font-medium tracking-wide mt-1">Параметрлер</span>
+</a>
+</nav>
+<!-- Floating Security Decorative Mesh Background -->
+<div class="fixed inset-0 -z-10 pointer-events-none opacity-20">
+<div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 blur-[120px] rounded-full"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/10 blur-[120px] rounded-full"></div>
+</div>
+</body></html>

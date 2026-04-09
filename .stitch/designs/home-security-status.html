@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="kk"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SENTINEL | Адаптивті мобильді қауіпсіздік</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface-variant": "#c3c6d4",
+                        "surface-tint": "#a5c8ff",
+                        "tertiary": "#ffb692",
+                        "tertiary-container": "#823400",
+                        "surface-dim": "#121416",
+                        "on-tertiary-fixed": "#341100",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1e2022",
+                        "primary-fixed-dim": "#a5c8ff",
+                        "secondary-fixed": "#69ff87",
+                        "secondary-container": "#02c953",
+                        "on-primary-fixed": "#001c3a",
+                        "primary-fixed": "#d4e3ff",
+                        "on-primary": "#00315f",
+                        "on-secondary-container": "#004d1b",
+                        "on-error": "#690005",
+                        "surface": "#121416",
+                        "tertiary-fixed-dim": "#ffb692",
+                        "on-secondary-fixed-variant": "#00531e",
+                        "inverse-on-surface": "#2f3133",
+                        "secondary": "#40e56c",
+                        "secondary-fixed-dim": "#3ce36a",
+                        "on-tertiary-fixed-variant": "#7a3000",
+                        "inverse-primary": "#005faf",
+                        "outline": "#8d909d",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#562000",
+                        "on-surface": "#e2e2e5",
+                        "tertiary-fixed": "#ffdbcb",
+                        "background": "#121416",
+                        "surface-container-lowest": "#0c0e10",
+                        "surface-container-low": "#1a1c1e",
+                        "primary": "#a5c8ff",
+                        "on-background": "#e2e2e5",
+                        "surface-variant": "#333537",
+                        "surface-bright": "#37393b",
+                        "on-secondary": "#003912",
+                        "outline-variant": "#434652",
+                        "on-primary-fixed-variant": "#004786",
+                        "primary-container": "#004c8f",
+                        "on-primary-container": "#93beff",
+                        "on-secondary-fixed": "#002108",
+                        "surface-container-high": "#282a2c",
+                        "surface-container-highest": "#333537",
+                        "inverse-surface": "#e2e2e5",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#ffa87c"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-glass {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .pulse-ring {
+            position: relative;
+        }
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            width: 140%;
+            height: 140%;
+            border: 2px solid currentColor;
+            border-radius: 50%;
+            opacity: 0.1;
+            top: -20%;
+            left: -20%;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-6 h-16 bg-[#121416] no-line tonal-shift using bg-[#1e2022]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#a5c8ff]" data-icon="shield_with_heart">shield_with_heart</span>
+<h1 class="font-['Space_Grotesk'] font-bold tracking-tight text-xl font-black tracking-[0.2em] text-[#a5c8ff]">SENTINEL</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-primary/20 hover:bg-[#1e2022] transition-colors cursor-pointer active:scale-95 duration-200">
+<img class="w-full h-full object-cover" data-alt="professional portrait of a man with minimalist glasses against a dark architectural background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd1OgFFLmPm6eSsPsiDtsuzGzHVbuL4py95G_amgpGphwdDI97iwa3Vz0n4sv80tekqwPLmTsb_k8FlVJUbpJsXdmlq8Wk_mUm1W98hj0VT7Ll8Y5d8LW4S0iY7aV5bk_ruC_X8ETC0Ibk3Y4cd9hWUppaskQFVP3GGH5b1WtlKuoynC7UWCR48-FJbs41vTT1kJTbeq8yox6_bbiZX9sB218QDtof2m-L24Prm6IxxWY9r2UhRJRxPBkarhcj5ak3zvkwK9K1DqM"/>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-md mx-auto space-y-8">
+<!-- Status Indicator Section (Dynamic Context) -->
+<section class="relative">
+<div class="flex flex-col items-center justify-center space-y-6 py-8 rounded-full">
+<!-- Status Ring: Logic for "Caution" Public Wi-Fi State -->
+<div class="relative flex items-center justify-center">
+<div class="absolute w-64 h-64 rounded-full border-2 border-tertiary/10"></div>
+<div class="absolute w-56 h-56 rounded-full border-2 border-tertiary/20 pulse-ring text-tertiary"></div>
+<div class="w-48 h-48 rounded-full bg-surface-container-high flex flex-col items-center justify-center border border-tertiary/30 shadow-2xl">
+<span class="material-symbols-outlined text-tertiary text-5xl mb-2" data-icon="wifi_lock" style="font-variation-settings: 'FILL' 1;">wifi_lock</span>
+<div class="text-center">
+<span class="block font-headline font-bold text-3xl tracking-tight text-tertiary">Сақ болыңыз</span>
+<span class="block font-label text-[10px] uppercase tracking-[0.2em] text-on-surface-variant">Қоғамдық Wi-Fi</span>
+</div>
+</div>
+</div>
+<div class="text-center space-y-2">
+<p class="text-on-surface-variant text-sm px-8 leading-relaxed">Қазіргі қосылым шифрланбаған. Жергілікті трафик көрінуі мүмкін.</p>
+<button class="mt-4 px-8 py-3 bg-gradient-to-br from-tertiary to-tertiary-container text-on-tertiary-fixed font-bold rounded-full text-sm shadow-lg shadow-tertiary/20 active:scale-95 transition-transform">
+                        VPN қосу
+                    </button>
+</div>
+</div>
+</section>
+<!-- Quick Actions (Asymmetric Grid) -->
+<section class="grid grid-cols-2 gap-4">
+<button class="col-span-2 flex items-center justify-between p-5 rounded-full bg-surface-container-high hover:bg-surface-bright transition-all active:scale-95 group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="radar">radar</span>
+</div>
+<div class="text-left">
+<h3 class="font-headline font-bold text-primary">Құрылғыны сканерлеу</h3>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Терең эвристикалық талдау</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+<button class="flex flex-col gap-3 p-5 rounded-full bg-surface-container-high hover:bg-surface-bright transition-all active:scale-95 text-left border-l-2 border-secondary/40">
+<span class="material-symbols-outlined text-secondary" data-icon="vpn_key">vpn_key</span>
+<div>
+<h3 class="font-headline font-bold text-on-surface text-sm">VPN басқару</h3>
+<p class="text-[10px] text-on-surface-variant">Ажыратылған</p>
+</div>
+</button>
+<button class="flex flex-col gap-3 p-5 rounded-full bg-surface-container-high hover:bg-surface-bright transition-all active:scale-95 text-left">
+<span class="material-symbols-outlined text-primary" data-icon="fingerprint">fingerprint</span>
+<div>
+<h3 class="font-headline font-bold text-on-surface text-sm">Қауіпсіздік ID</h3>
+<p class="text-[10px] text-on-surface-variant">Расталған қойма</p>
+</div>
+</button>
+</section>
+<!-- Vibe Check (AI Analysis) -->
+<section class="space-y-4">
+<div class="flex justify-between items-end px-2">
+<div>
+<h2 class="font-headline text-2xl font-bold tracking-tight text-on-surface">Күйді тексеру</h2>
+<p class="text-xs text-on-surface-variant">ЖИ-мен басқарылатын құпиялылық диагностикасы</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div class="space-y-3">
+<!-- App Analysis Card -->
+<div class="bg-surface-container-high rounded-full p-1 pl-6 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex -space-x-3">
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-high bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-xs" data-icon="photo_camera">photo_camera</span>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-container-high bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-xs" data-icon="mic">mic</span>
+</div>
+</div>
+<span class="text-sm font-medium text-on-surface">3 қолданба микрофонға/камераға рұқсат сұрауда</span>
+</div>
+<button class="w-10 h-10 rounded-full bg-surface-bright flex items-center justify-center hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="rule">rule</span>
+</button>
+</div>
+<!-- Network Activity Card -->
+<div class="bg-surface-container-high rounded-full p-1 pl-6 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="query_stats">query_stats</span>
+</div>
+<span class="text-sm font-medium text-on-surface">Қалыпты трафик үлгілері анықталды</span>
+</div>
+<button class="w-10 h-10 rounded-full bg-surface-bright flex items-center justify-center hover:bg-secondary/20 transition-colors">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="check_circle">check_circle</span>
+</button>
+</div>
+<!-- AI Insight Image -->
+<div class="relative h-40 rounded-full overflow-hidden mt-6 group">
+<img class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-700" data-alt="abstract digital visualization of encryption nodes and neural network patterns in deep blue and cyan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAatZ--4Mr2ilj8WQFVxMhcXL7KXHvwEaNsIrQSw70zrqZsu52QGCDq2HcfZ071iz4hyPel5alx9uIIEpG0ng7a5kYQffhZ7uY8EoLlJa02BWnwsNqtdztF5ojCks5HmhlwkvOPwJDBKlWItDKDX-gECsfmSxh3S55hhv-cxuQKcGZ0Lx3iRCW0nzV0weZFjG7KTPEeyxgMcyvRfDtJhLW1MwWEKbDhi3dBjX6TGInwcJ7iiFxSTxek2Hqc8jnq4DaLn8svrhE1o84"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest to-transparent flex flex-col justify-end p-6">
+<span class="text-[10px] font-headline font-black text-secondary tracking-[0.3em] uppercase">ЖИ ТҮСІНІГІ</span>
+<p class="text-sm font-bold text-on-surface leading-snug">Үлгі танылды: Үйдегі кеңсе ортасының қалыпты мінез-құлқы.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#121416]/80 backdrop-blur-xl border-t border-[#a5c8ff]/15 shadow-[0_-4px_24px_rgba(0,0,0,0.4)] rounded-t-[0.75rem]">
+<a class="flex flex-col items-center justify-center bg-[#004c8f] text-[#a5c8ff] rounded-[0.75rem] px-5 py-2 active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="security" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="font-['Manrope'] text-[10px] font-medium tracking-wide">Қалқан</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-500 px-5 py-2 hover:text-[#a5c8ff] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['Manrope'] text-[10px] font-medium tracking-wide">Талдау</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-500 px-5 py-2 hover:text-[#a5c8ff] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="fingerprint">fingerprint</span>
+<span class="font-['Manrope'] text-[10px] font-medium tracking-wide">Қойма</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-500 px-5 py-2 hover:text-[#a5c8ff] transition-all active:scale-90 duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-['Manrope'] text-[10px] font-medium tracking-wide">Параметрлер</span>
+</a>
+</nav>
+</body></html>
