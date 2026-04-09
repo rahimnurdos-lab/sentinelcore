@@ -396,6 +396,20 @@ function buildHelpText() {
   ].join('\n');
 }
 
+function getDirectAdvice(input) {
+  const lower = (input || '').toLowerCase();
+  if (lower.includes('пороль') || lower.includes('пароль') || lower.includes('құпиясөз') || lower.includes('password')) {
+    return 'Мықты пароль: кемі 12-16 таңба, бас/кіші әріп, сан, символ. Бір парольді бірнеше сайтта қолданбаңыз және 2FA қосыңыз.';
+  }
+  if (lower.includes('фишинг') || lower.includes('phishing')) {
+    return 'Фишингтен қорғану: доменді тексеріңіз, шұғыл ақша/код сұраса сенбеңіз, сілтемені ашпай тұрып тексеріңіз.';
+  }
+  if (lower.includes('вирус') || lower.includes('malware') || lower.includes('троян')) {
+    return 'Вирус қаупі болса: файлды ашпаңыз, ресми антивируспен скан жасаңыз, жүйені жаңартыңыз.';
+  }
+  return 'Мен киберқауіпсіздік бойынша көмектесемін. Мысалы: "пороль қалай мықты жасаймын?", "фишингті қалай танимын?" деп жазыңыз.';
+}
+
 function pushIncident(chatState, incident) {
   chatState.recentIncidents.unshift(incident);
   if (chatState.recentIncidents.length > MAX_RECENT_INCIDENTS) {
@@ -880,6 +894,12 @@ async function processUpdate(update) {
   const text = (message.text || '').trim();
   if (text.startsWith('/')) {
     await handleCommand(message);
+    return;
+  }
+
+  if (!isGroup(message.chat)) {
+    const reply = getDirectAdvice(text);
+    await sendMessage(message.chat.id, reply);
     return;
   }
   await moderateMessage(message);
